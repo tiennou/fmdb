@@ -1109,22 +1109,20 @@
     return worked;
 }
 
-- (NSError*)inSavePoint:(void (^)(BOOL *rollback))block {
+- (NSError*)inSavePoint:(BOOL (^)(void))block; {
     static unsigned long savePointIdx = 0;
     
     NSString *name = [NSString stringWithFormat:@"dbSavePoint%ld", savePointIdx++];
-    
-    BOOL shouldRollback = NO;
-    
+
     NSError *err = 0x00;
     
     if (![self startSavePointWithName:name error:&err]) {
         return err;
     }
     
-    block(&shouldRollback);
+    BOOL success = block();
     
-    if (shouldRollback) {
+    if (!success) {
         [self rollbackToSavePointWithName:name error:&err];
     }
     else {

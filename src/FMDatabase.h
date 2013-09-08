@@ -751,7 +751,7 @@
  
  */
 
-- (NSError*)inSavePoint:(void (^)(BOOL *rollback))block;
+- (NSError*)inSavePoint:(BOOL (^)(void))block;
 
 #endif
 
