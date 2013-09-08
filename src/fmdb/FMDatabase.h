@@ -933,7 +933,7 @@ typedef int(^FMDBExecuteStatementsCallbackBlock)(NSDictionary *resultsDictionary
  
  */
 
-- (NSError*)inSavePoint:(void (^)(BOOL *rollback))block;
+- (NSError*)inSavePoint:(BOOL (^)(void))block;
 
 ///----------------------------
 /// @name SQLite library status
